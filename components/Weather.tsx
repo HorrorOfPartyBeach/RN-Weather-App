@@ -1,21 +1,35 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { weatherConditions } from '../utils/WeatherConditions';
 
-const Weather = ({locationName, weather, temperature}: {locationName: string, weather: string, temperature: number}) => {
-  return (
-    <View style={styles.weatherContainer}>
+interface WeatherProps {
+  locationName: string;
+  temperature: number;
+  weather: string;
+};
+
+
+export const Weather: React.FC<WeatherProps> = ({locationName, weather, temperature}) => {
+  if(weather) {
+    return (
+      <View style={
+        [styles.weatherContainer,
+           { backgroundColor: weatherConditions[weather].color}
+        ]}>
       <View style={styles.headerContainer}>
-        <MaterialCommunityIcons size={48} name="weather-sunny" color={'#fff'} />
+        <MaterialCommunityIcons size={72} name={weatherConditions[weather].icon} color={'#fff'} />
         <Text style={styles.title}>{locationName}</Text>
         <Text style={styles.tempText}>{temperature}˚</Text>
       </View>
       <View style={styles.bodyContainer}>
         <Text style={styles.title}>{weather}</Text>
-        <Text style={styles.subtitle}>It hurts my eyes!</Text>
+        <Text style={styles.subtitle}>{weatherConditions[weather].subtitle}</Text>
       </View>
     </View>
   );
+}
+return null;
 };
 
 const styles = StyleSheet.create({
@@ -48,5 +62,3 @@ const styles = StyleSheet.create({
       color: '#fff'
     }
   });
-
-export default Weather;

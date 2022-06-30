@@ -3,22 +3,18 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-//import Navigation from './navigation';
 import * as Location from 'expo-location';
 
 import { API_KEY } from './utils/WeatherAPIKey';
 
-import Weather from './components/Weather';
+import {Weather} from './components/Weather';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  //const colorScheme = useColorScheme();
 
   const [locationName, setLocationName] = useState("");
   const [temperature, setTemperature] = useState(0);
   const [weatherCondition, setWeatherCondition] = useState("");
-  //const [error, setError] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
@@ -35,7 +31,6 @@ export default function App() {
     })
 
     let { coords } = location;
-    // console.log("COORDS:", coords);
 
     if (coords) {
       const { latitude, longitude } = coords;
@@ -84,7 +79,6 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <Weather locationName={locationName} weather={weatherCondition} temperature={temperature} />
-        {/* <Navigation colorScheme={colorScheme} /> */}
         <StatusBar />
       </SafeAreaProvider>
     );
