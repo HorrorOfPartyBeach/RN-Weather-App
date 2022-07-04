@@ -1,27 +1,32 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { weatherConditions } from '../utils/WeatherConditions';
+//import { WeatherScreenRouteProp } from '../types';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../types';
+import { useNavigation } from '@react-navigation/native';
+import { Text, View } from '../components/Themed';
 
-interface WeatherProps {
-  locationName: string;
-  temperature: number;
-  weather: string;
-};
+//type WeatherScreenRouteProp = NativeStackNavigationProp<RootStackParamList, 'Weather'>;
 
-
-export const Weather: React.FC<WeatherProps> = ({locationName, weather, temperature}) => {
+export const Home = ({navigation, location, weather, temperature }) => {
+  //const navigation = useNavigation<WeatherScreenRouteProp>();
   if(weather) {
     return (
       <View style={
-        [styles.weatherContainer,
+        [styles.container,
            { backgroundColor: weatherConditions[weather].color}
         ]}>
-      <View style={styles.headerContainer}>
+                <View style={styles.headerContainer}>
         <MaterialCommunityIcons size={72} name={weatherConditions[weather].icon} color={'#fff'} />
-        <Text style={styles.title}>{locationName}</Text>
+        <Pressable
+        onPress={() => navigation.navigate('Forecast')}
+        >
+          <Text style={styles.title}>{location}</Text>
+        </Pressable>
         <Text style={styles.tempText}>{temperature}˚</Text>
-      </View>
+        </View>
       <View style={styles.bodyContainer}>
         <Text style={styles.title}>{weather}</Text>
         <Text style={styles.subtitle}>{weatherConditions[weather].subtitle}</Text>
@@ -33,9 +38,8 @@ return null;
 };
 
 const styles = StyleSheet.create({
-    weatherContainer: {
+    container: {
       flex: 1,
-      backgroundColor: '#f7b733'
     },
     headerContainer: {
       flex: 1,
@@ -60,5 +64,5 @@ const styles = StyleSheet.create({
     subtitle: {
       fontSize: 24,
       color: '#fff'
-    }
+    },
   });
