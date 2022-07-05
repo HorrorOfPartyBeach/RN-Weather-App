@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     headerContainer: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      paddingTop: 20
     },
     tempText: {
       fontSize: 48,
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
       alignItems: 'flex-start',
       justifyContent: 'flex-end',
       paddingLeft: 25,
-      marginBottom: 40
+      paddingBottom: 40
     },
     title: {
       fontSize: 48,
