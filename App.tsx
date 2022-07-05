@@ -1,85 +1,36 @@
 import React, {useState, useEffect} from 'react';
-import { StatusBar } from 'expo-status-bar';
+import { ColorSchemeName, Pressable } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ForecastScreen } from './screens/ForecastScreen';
+import { HomeScreen } from './screens/HomeScreen';
+import NotFoundScreen from './screens/NotFoundScreen';
+import { RootStackParamList } from './types';
 
 import useCachedResources from './hooks/useCachedResources';
-import * as Location from 'expo-location';
 
-import { API_KEY } from './utils/WeatherAPIKey';
-
-import {Weather} from './components/Weather';
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-
-  const [locationName, setLocationName] = useState("");
-  const [temperature, setTemperature] = useState(0);
-  const [weatherCondition, setWeatherCondition] = useState("");
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-
-
-  const getLocation = async () => {
-    let {
-        status
-    } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') return;
-
-    try {
-    let location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Highest
-    })
-
-    let { coords } = location;
-
-    if (coords) {
-      const { latitude, longitude } = coords;
-      setLatitude(latitude);
-      setLongitude(longitude);
-   }
-  } catch(error) {
-    console.log("Error while trying to get location:", error);
-  }
-};
-
-  const getWeatherData = async (lat: number, long: number) => {
-    let API = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${API_KEY}&units=metric`
-    try {
-    await fetch(API)
-      .then(res => res.json())
-      .then(data => {
-        setLocationName(data.name);
-        setTemperature(data.main.temp);
-        setWeatherCondition(data.weather[0].main);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    try {
-        getLocation()
-            .then(() => {
-                if (latitude !== undefined && longitude !== undefined) {
-                  getWeatherData(latitude, longitude);
-                }
-            })
-            
-
-    } catch (error) {
-        console.error(error);
-    }
-
-}, [latitude, longitude]);
 
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
       <SafeAreaProvider>
-        <Weather locationName={locationName} weather={weatherCondition} temperature={temperature} />
-        <StatusBar />
+        <NavigationContainer>
+           <Stack.Navigator
+             screenOptions={{
+              headerShown: false
+            }}
+           >
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Forecast" component={ForecastScreen} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+    </Stack.Navigator>
+    </NavigationContainer>
       </SafeAreaProvider>
     );
   }
