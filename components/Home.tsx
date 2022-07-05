@@ -19,13 +19,21 @@ export const Home = ({ navigation, location, weather, temperature }) => {
                         name={weatherConditions[weather].icon}
                         color={'#fff'}
                     />
-                    <Pressable onPress={() => navigation.navigate('Forecast')}>
-                        <Text style={styles.title}>{location}</Text>
+                    <Pressable
+                        onPress={() =>
+                            navigation.navigate('Forecast', {
+                                location,
+                                weather,
+                                temperature
+                            })
+                        }
+                    >
+                        <Text style={styles.largeText}>{location}</Text>
                     </Pressable>
-                    <Text style={styles.tempText}>{temperature}˚</Text>
+                    <Text style={styles.largeText}>{temperature}˚</Text>
                 </View>
                 <View style={styles.bodyContainer}>
-                    <Text style={styles.title}>
+                    <Text style={styles.largeText}>
                         {weatherConditions[weather].title}
                     </Text>
                     <Text style={styles.subtitle}>
@@ -48,7 +56,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingTop: 20
     },
-    tempText: {
+    largeText: {
         fontSize: 48,
         color: '#fff'
     },
@@ -58,10 +66,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingLeft: 25,
         paddingBottom: 40
-    },
-    title: {
-        fontSize: 48,
-        color: '#fff'
     },
     subtitle: {
         fontSize: 24,
