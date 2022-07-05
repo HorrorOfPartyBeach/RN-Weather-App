@@ -1,17 +1,10 @@
 import React from 'react';
-import { StyleSheet, Pressable } from 'react-native';
+import { StyleSheet, Pressable, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { weatherConditions } from '../utils/WeatherConditions';
-//import { WeatherScreenRouteProp } from '../types';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
-import { useNavigation } from '@react-navigation/native';
-import { Text, View } from '../components/Themed';
-
-//type WeatherScreenRouteProp = NativeStackNavigationProp<RootStackParamList, 'Weather'>;
+import { Text } from '../components/Themed';
 
 export const Home = ({ navigation, location, weather, temperature }) => {
-    //const navigation = useNavigation<WeatherScreenRouteProp>();
     if (weather) {
         return (
             <View
@@ -32,7 +25,9 @@ export const Home = ({ navigation, location, weather, temperature }) => {
                     <Text style={styles.tempText}>{temperature}˚</Text>
                 </View>
                 <View style={styles.bodyContainer}>
-                    <Text style={styles.title}>{weather}</Text>
+                    <Text style={styles.title}>
+                        {weatherConditions[weather].title}
+                    </Text>
                     <Text style={styles.subtitle}>
                         {weatherConditions[weather].subtitle}
                     </Text>

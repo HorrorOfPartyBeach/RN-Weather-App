@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Platform, StyleSheet } from 'react-native';
-
-import { StatusBar } from 'expo-status-bar';
-import { Text, View } from '../components/Themed';
 import { Home } from '../components/Home';
 
 import * as Location from 'expo-location';
@@ -73,15 +69,3 @@ export const HomeScreen = ({ navigation }) => {
         />
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold'
-    }
-});
