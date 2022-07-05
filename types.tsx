@@ -3,25 +3,31 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { CompositeScreenProps, NavigatorScreenParams, RouteProp } from '@react-navigation/native';
-import { NativeStackScreenProps, NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+    CompositeScreenProps,
+    NavigatorScreenParams,
+    RouteProp
+} from '@react-navigation/native';
+import {
+    NativeStackScreenProps,
+    NativeStackNavigationProp,
+    createNativeStackNavigator
+} from '@react-navigation/native-stack';
 
 declare global {
-  namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
-  }
+    namespace ReactNavigation {
+        interface RootParamList extends RootStackParamList {}
+    }
 }
 
 export type RootStackParamList = {
-  Home: undefined;
-  Forecast: undefined;
-  NotFound: undefined;
+    Home: undefined;
+    Forecast: undefined;
+    NotFound: undefined;
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
-  RootStackParamList,
-  Screen
->;
+export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
+    NativeStackScreenProps<RootStackParamList, Screen>;
 
 // export type HomeParamList = {
 //   Forecast: undefined;

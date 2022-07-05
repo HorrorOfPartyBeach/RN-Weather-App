@@ -1,8 +1,9 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true,
-    "allowJs": true,
-    "noImplicitAny": false,
-  }
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "strict": true,
+        "allowJs": true,
+        "noImplicitAny": false
+    },
+    "exclude": ["__tests__/**/*-test.ts"]
 }
